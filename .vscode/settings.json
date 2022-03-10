@@ -1,0 +1,4 @@
+// .vscode/settings.json
+{
+    "jest.jestCommandLine": "npm run test --",
+}

@@ -39,7 +39,24 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: "AIzaSyAG7gYghWh5FSN31hfREESZjnSPGRkIQ44",
+          authDomain: "authentication-94c1a.firebaseapp.com",
+          projectId: "authentication-94c1a",
+          storageBucket: "authentication-94c1a.appspot.com",
+          messagingSenderId: "793023831068",
+          appId: "1:793023831068:web:8191289bffcec91bb053d9"
+        },
+        services: {
+          auth: true,
+
+        }
+      }
+    ]
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -50,5 +67,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+
 }

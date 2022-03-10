@@ -15,6 +15,11 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
     '.*\\.(vue)$': 'vue-jest'
   },
+  globals: {
+    'ts-jest': {
+      tsConfig: 'tsconfig.json'
+    }
+  },
   collectCoverage: true,
   collectCoverageFrom: [
     '<rootDir>/components/**/*.vue',
