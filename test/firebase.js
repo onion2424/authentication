@@ -4,7 +4,7 @@
 import { initializeApp } from "firebase/app";
 import 'firebase/auth'
 import 'firebase/firestore'
-import { getAuth, onAuthStateChanged, connectAuthEmulator } from "firebase/auth";
+import { getAuth, connectAuthEmulator , createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -21,11 +21,23 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// export auth
+// create auth provider
 const auth = getAuth(app);
 // use Emulator
 //https://firebase.google.com/docs/emulator-suite/connect_auth#web-version-9 参考
 connectAuthEmulator(auth, "http://localhost:9099");
 
+// エミュレータ上で行うように関数をラップしてexport
+// ユーザ登録
+export function createAcount(mailaddress, password){
+  return createUserWithEmailAndPassword(auth, mailaddress, password);
+}
+// ログイン
+export function login(mailaddress, password){
+  return signInWithEmailAndPassword(auth, mailaddress, password);
+}
 
-export default auth;
+// ログアウト
+export function logout(){
+  return signOut(auth);
+}

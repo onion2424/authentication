@@ -1,4 +1,8 @@
 // .vscode/settings.json
 {
-    "jest.jestCommandLine": "npm run test --",
+    // vscode-jest に jest を実行するコマンドを教えてやる
+    // NOTE: `vscode-jest` はこのコマンドに `--watch` などのオプションを渡して実行するので、
+    // `--` を明示してオプションが続けて渡せるようにしておく必要がある。
+    "jest.jestCommandLine": "curl -X \"DELETE\" -H \"Authorization: Barer owner\" \"http://localhost:9099/emulator/v1/projects/onion2424-authentication/accounts\" && npm run test --",
+    
 }
