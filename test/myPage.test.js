@@ -1,32 +1,29 @@
-import Home from "@/components/Home.vue";
-import Login from "@/components/Login.vue";
+import myPage from "@/components/myPage.vue";
+import Logout from "@/components/Logout.vue";
 
 import { mount } from '@vue/test-utils';
 import { createAcount, login } from '@/test/firebase';
 
 let wrapper;
 
-//https://stackoverflow.com/questions/50977862/how-to-test-url-change-with-jest
-//global.window = {location: {pathname: null}};
-
 const router = {push: jest.fn()};
 
 beforeEach(() => {
-    wrapper = mount(Home, {
+    wrapper = mount(myPage, {
       mocks: { $router: router }
     })
   })
 
 describe('Template', () => {
-    test('ログインボタンがある', ()=>{
-        const login = wrapper.getComponent(Login);
-        expect(login.contains('button')).toBeTruthy();
+    test('ログアウトボタンがある', ()=>{
+        const logout = wrapper.getComponent(Logout);
+        expect(logout.contains('button')).toBeTruthy();
     });
 
 });
 
 describe('login', () => {
-    test('ログイン => 画面切り替え', async () => {
+    test('GET不可', async () => {
         await wrapper.vm.toMyPage();
         //https://qiita.com/moritanzania/items/2f55c8c3894c66b93823
         expect(router.push).toBeCalledWith('/myPage');

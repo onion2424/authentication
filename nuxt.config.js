@@ -1,6 +1,6 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
+  ssr: true,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -52,7 +52,15 @@ export default {
           appId: "1:793023831068:web:8191289bffcec91bb053d9"
         },
         services: {
-          auth: true,
+          auth: {
+            persistence: 'local', // default
+            initialize: {
+              //onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
+              onAuthStateChangedAction: 'auth/onAuthStateChangedAction',
+              subscribeManually: false
+            },
+            ssr: false, // default
+          }
 
         }
       }
@@ -68,5 +76,10 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
+
+  // middleware
+  router: {
+    middleware: 'authenticated'
+  }
 
 }

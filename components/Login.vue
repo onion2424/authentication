@@ -43,7 +43,8 @@ export default Vue.extend({
 
       async login(){
            try{
-               await this.$fire.auth.signInWithEmailAndPassword(this.mailaddress, this.password);
+               let obj = await this.$fire.auth.signInWithEmailAndPassword(this.mailaddress, this.password);
+               console.log(obj);
                return true;
            }catch(error){
                return false;
