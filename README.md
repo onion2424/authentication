@@ -77,7 +77,7 @@ jest
 
 ○ jest
   
-  firebase/authenticationをエミュレータ上で操作することでテストを行う
+    firebase/authenticationをエミュレータ上で操作することでテストを行う
   
   
 
