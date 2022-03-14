@@ -15,8 +15,10 @@ beforeEach(() => {
         Logout:{
           template: "<h1 id='test'>test</h1>"
         }
+      },
+      computed: {
+        mailaddress: jest.fn()
       }
-
     })
   })
 
@@ -29,7 +31,6 @@ describe('myPage', () => {
     });
 
     test('middlewareにauthenticatedが登録されている', () => {
-      console.log(wrapper.vm.$options);
       expect(wrapper.vm.$options.middleware).toContain("authenticated");
     });
 });

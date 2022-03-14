@@ -67,7 +67,7 @@ describe('Signup', () => {
             });
             await wrapper.vm.onClickSignUp();
 
-            // alertが１度も呼ばれてない
+            // 登録に成功し、alertが１度も呼ばれてない
             expect(window.alert.mock.calls.length).toBe(0);
 
             // ログインしてユーザ情報を取得
@@ -90,7 +90,7 @@ describe('Signup', () => {
 
             await wrapper.vm.onClickSignUp();
 
-            // alertが１度呼ばれる
+            // 登録に失敗し、alertが１度呼ばれる
             expect(window.alert.mock.calls.length).toBe(1);
 
         });

@@ -65,7 +65,7 @@ describe('Login', () => {
             });
             await createAcount(mailaddress, password);
             await wrapper.vm.onClickLogin();
-            // alertが呼ばれない
+            // ログインに成功し、alertが呼ばれない
             expect(window.alert.mock.calls.length).toBe(0);
 
             // 成功時はuserからmailaddressが取得できる
@@ -81,7 +81,7 @@ describe('Login', () => {
                 password: password
             });
             await wrapper.vm.onClickLogin();
-            // alertが１度呼ばれる
+            // ログインに失敗し、alertが１度呼ばれる
             expect(window.alert.mock.calls.length).toBe(1);
         })
 

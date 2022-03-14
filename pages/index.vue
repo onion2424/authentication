@@ -3,7 +3,7 @@
         <p>ホーム画面</p>
         <button @click='onClickMypage' id="toMyPage">マイページ</button>
         <button @click='onClickSignUp' id="toSignUp">ユーザ登録</button>
-        <p v-show='isLoggedIn'>LoggedIn!!</p>
+        <p id="loggedIn" v-show='isLoggedIn'>LoggedIn!!</p>
     </div>
 </template>
 
