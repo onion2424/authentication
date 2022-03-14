@@ -10,19 +10,16 @@ import Vue from "vue";
 export default Vue.extend({
   methods:{
       async onClickLogout(){
-          if (await this.logout()){
-              console.log('成功')!
-          }
-          return true;
+        const message = await this.logout();
+        message && window.alert(message);
       },
 
-      async logout(){
+      async logout(): Promise<string>{
            try{
                await this.$fire.auth.signOut();
-               return true;
+               return '';
            }catch(error:any){
-               alert(error.message);
-               return false;
+               return 'ログアウト失敗';
            }
       }
 

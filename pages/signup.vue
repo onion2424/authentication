@@ -1,5 +1,6 @@
 <template>
   <div class="signup">
+    <p>登録画面</p>
     <table>
         <tr>
           <th>メールアドレス：</th>
@@ -38,33 +39,35 @@ export default Vue.extend({
   methods: {
     onClickSignUp:  async function () {
       const message = await this.createAcount();
-      alert(message);
-
+      message && window.alert(message);
     },
 
     // 登録処理
-    async createAcount(){
+    async createAcount(): Promise<string>{
       try {
         await this.$fire.auth.createUserWithEmailAndPassword(this.mailaddress, this.password);
-        return '成功';
+        return '';
       } catch(error: any) {
-        // エラー時 
-        const errorCode=error.code;
-        const errorMessage=error.message;
 
-        // エラーハンドリング 
-        // https://firebase.google.com/docs/reference/js/auth?hl=ja#autherrorcodes
-        // 使用するエラーコードを直接チェック
-        // エラー項目の参考
-        // https://qiita.com/marchin_1989/items/ade93705dbf3c72e1ce0
-        if(errorCode==='auth/invalid-email') {
-        } else if(errorCode==='auth/user-disabled') {
-        } else if(errorCode==='auth/user-not-found') {
-        } else if(errorCode==='auth/wrong-password') {
-        } else if(errorCode==='auth/too-many-requests') {
-        } else {
-        }
-        return errorMessage;
+              // エラーハンドリング
+              // https://masalib.hatenablog.com/entry/2020/11/26/000000
+              const errorCode=error.code;
+              const errorMessage=error.message;
+              let ret = '';
+
+              if(errorCode==='auth/invalid-email') {
+                ret = 'メールアドレスの形式が間違っています';
+              } else if(errorCode==='auth/email-already-in-use') {
+                ret = 'メールアドレスがすでに使用されています';
+              } else if(errorCode==='auth/weak-password') {
+                ret = 'パスワードが弱すぎます(6文字以上)';
+              } else if(errorCode==='auth/network-request-failed') {
+                ret = '通信エラー';
+              } else { // その他
+                ret = '登録に失敗しました';
+              }
+
+              return ret;
       }
     }
 

@@ -1,14 +1,9 @@
 import { Context } from '@nuxt/types'
 
+// ページ遷移時に実行するミドルウェア
 export default ({ store, route, redirect }: Context) => {
-    console.log(route.name);
-    // if (!store.getters.isLoggedIn && route.name !== 'index') {
-    //     redirect('/');
-    // }else {
-    //     store.$router.push(route.path || '/');
-    // }
-    console.log(store);
-    if(route.name !== 'index' && !store.getters['auth/isLoggedIn']){
-        redirect('/');
+    //未ログイン時は'/'にリダイレクト
+    if(!store.getters['auth/isLoggedIn']){
+        redirect('/login');
     }
 }

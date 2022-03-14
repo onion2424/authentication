@@ -5,7 +5,6 @@ import { ActionContext } from "vuex/types";
 import { Context } from "@nuxt/types";
 import { initializeStores } from '~/utils/store-accessor';
 
-//https://crieit.net/posts/vuex-module-decorators-nuxtServerInit-store-index-ts-actions
 
 
 // RootStateを追加
@@ -22,10 +21,8 @@ export const actions: ActionTree<any, any> = {
       context: ActionContext<RootState, RootState>,
       server: Context
     ) => {
+      //https://crieit.net/posts/vuex-module-decorators-nuxtServerInit-store-index-ts-actions
       // nuxtServerInitの処理
-    //   if (this.$fire.auth === null) {
-    //     throw 'nuxtServerInit Example not working - this.$fire.auth cannot be accessed.'
-    //   }
   
       if (server.$fire.auth === null) {
         throw 'nuxtServerInit Example not working - server.$fire.auth cannot be accessed.'
@@ -34,11 +31,8 @@ export const actions: ActionTree<any, any> = {
       if (server.app.$fire.auth === null) {
         throw 'nuxtServerInit Example not working - server.$fire.auth cannot be accessed.'
       }
-      
-      // onAuthStateChangedイベントを設定
-      //server.$fire.auth.onAuthStateChanged(function(user){console.log('hey')});
 
-      if (server?.res?.locals?.user) {
+      if (server.res?.locals?.user) {
         const { allClaims: claims, ...authUser } = server.res.locals.user;
         await context.dispatch('onAuthStateChangedAction', {
           authUser,

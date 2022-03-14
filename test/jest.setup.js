@@ -2,7 +2,7 @@
 
 import fetch from "node-fetch";
 // emulator内のデータを削除
-beforeAll(() => {
+beforeEach(() => {
     // httpリクエストでemulator上のデータを全削除
     // https://firebase.google.com/docs/reference/rest/auth/#section-auth-emulator-clearaccounts
     // https://stackoverflow.com/questions/64845486/delete-all-users-from-the-new-firebase-auth-emulator

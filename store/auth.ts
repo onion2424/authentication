@@ -21,7 +21,7 @@ interface authData {
 @Module({ stateFactory: true, namespaced: true, name: 'auth' })
 export default class Auth extends VuexModule{
     // state : data() property
-    private user: user = {authUser: null};
+    public user: user = {authUser: null};
     public store: any;
 
 
@@ -43,10 +43,10 @@ export default class Auth extends VuexModule{
         this.user.authUser = {
             uid: authUser.uid,
             email: authUser.email,
-            emailVerified: authUser.emailVerified,
-            displayName: authUser.displayName,
-            photoURL: claims.picture,
-            isAdmin: claims.admin
+            //emailVerified: authUser.emailVerified,
+            //displayName: authUser.displayName,
+            //photoURL: claims.picture,
+            //isAdmin: claims.admin
         }
 
     }
@@ -56,11 +56,8 @@ export default class Auth extends VuexModule{
     public async onAuthStateChangedAction(data:authData) {
         const authUser = data?.authUser;
         const claims = data?.claims;
-        console.log(data);
-        console.log(this);
         if (!authUser) {
           // ログアウトしたらページ遷移します
-          console.log('return');
           
           await this.RESET_USER();
           this.store.$router.push('/');
@@ -70,7 +67,6 @@ export default class Auth extends VuexModule{
         if (authUser && claims) {
           try {
         // ログインしたらページ遷移します
-            console.log('移動');
             await this.SET_USER(data);
             this.store.$router.push('/myPage/');
           } catch (e) {

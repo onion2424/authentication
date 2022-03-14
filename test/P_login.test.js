@@ -1,26 +1,8 @@
-import Login from "@/components/Login.vue";
+import Login from "~/pages/login.vue";
 import { shallowMount } from '@vue/test-utils';
-import { createAcount, login } from '@/test/firebase';
-import fetch from "node-fetch";
+import { createAcount, login, getUser } from '@/test/firebase';
 
 // ログインテスト
-
-// emulator内のデータを削除
-// beforeAll(() => {
-//     // httpリクエストでemulator上のデータを全削除
-//     // https://firebase.google.com/docs/reference/rest/auth/#section-auth-emulator-clearaccounts
-//     // https://stackoverflow.com/questions/64845486/delete-all-users-from-the-new-firebase-auth-emulator
-//     fetch('http://localhost:9099/emulator/v1/projects/onion2424-authentication/accounts', {
-//     method: 'DELETE',
-//     headers: {
-//         'Authorization': 'Bearer owner'
-//     }
-//     });
-
-//     //alertを文字列を返すだけにする
-//     window.alert = (msg) => msg;
-// });
-
 let wrapper;
 // 事前にfirebaseモジュールを使用している箇所をモックする
 beforeEach(() => {
@@ -39,9 +21,11 @@ beforeEach(() => {
             }
         }
     });
+
+    window.alert = jest.fn()
 });
 
-describe.skip('Login', () => {
+describe('Login', () => {
     //コンポーネントテスト
     test('Loginコンポーネントが存在する', () => {
         expect(wrapper.exists()).toBeTruthy();
@@ -70,29 +54,36 @@ describe.skip('Login', () => {
         });
     })
 
-    //
+    // 登録関連
     describe('login', () => {
-        test('登録済み ⇒ ログイン', async ()=>{
+        test('登録済み ⇒ ログイン成功', async ()=>{
             let mailaddress = 'login@gmail.com';
             let password = 'testtest';
             await wrapper.setData({
                 mailaddress: mailaddress,
                 password: password
             });
-            //モックされているか
-            expect(() => wrapper.vm.onClickLogin()).not.toThrow();
+            await createAcount(mailaddress, password);
+            await wrapper.vm.onClickLogin();
+            // alertが呼ばれない
+            expect(window.alert.mock.calls.length).toBe(0);
+
+            // 成功時はuserからmailaddressが取得できる
+            const user = getUser();
+            expect(user.email).toBe(mailaddress);
         });
 
-        test('ログイン ⇒ メッセージ確認', async () => {
+        test('未登録 => ログイン失敗', async () => {
             let mailaddress = 'login2@gmail.com';
-            let password = 'testtest2';
+            let password = 'testtest';
             await wrapper.setData({
                 mailaddress: mailaddress,
                 password: password
             });
-            await createAcount(mailaddress, password);
-            const message = await wrapper.vm.login();
-            expect(message).toBe('成功');
-        });
+            await wrapper.vm.onClickLogin();
+            // alertが１度呼ばれる
+            expect(window.alert.mock.calls.length).toBe(1);
+        })
+
     })
 });

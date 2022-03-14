@@ -1,5 +1,5 @@
 export default {
-  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
+  // Enable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: true,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -55,6 +55,7 @@ export default {
           auth: {
             persistence: 'local', // default
             initialize: {
+              // subsucribeする 
               //onAuthStateChangedMutation: 'ON_AUTH_STATE_CHANGED_MUTATION',
               onAuthStateChangedAction: 'auth/onAuthStateChangedAction',
               subscribeManually: false
@@ -77,9 +78,17 @@ export default {
   build: {
   },
 
-  // middleware
+  // routing時にmiddlewareを通す
   router: {
-    middleware: 'authenticated'
+    // 存在しないページはリダイレクト
+    // https://dev83.com/nuxtjs-error/
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'notFound',
+        path: '*',
+        component: resolve(__dirname, 'pages/index.vue')
+      })
+    }
   }
 
 }

@@ -1,6 +1,6 @@
 import Logout from "@/components/Logout.vue";
 import { shallowMount } from '@vue/test-utils';
-import { createAcount, login, logout } from '@/test/firebase';
+import { createAcount, login, logout, getUser } from '@/test/firebase';
 
 // ログアウトテスト
 
@@ -22,9 +22,11 @@ beforeEach(() => {
             }
         }
     });
+
+    window.alert = jest.fn();
 });
 
-describe.skip('Logout', () => {
+describe('Logout', () => {
     // コンポーネントテスト
     test('Logoutコンポーネントが存在する', () => {
         expect(wrapper.exists()).toBeTruthy();
@@ -32,29 +34,42 @@ describe.skip('Logout', () => {
 
     // テンプレートテスト
     describe('template', () => {
+
         test('ログアウトボタンが存在する', () => {
-            expect(wrapper.contains('button')).toBeTruthy();
+            const button = wrapper.find('button');
+            expect(button.text()).toBe('ログアウト');
         });
     })
 
     // ログアウト
     describe('logout', () => {
-        test('ログアウト 無意味', async () => {
+        test('ログイン済み => ログアウト成功', async () => {
             let mailaddress = 'logout@gmail.com';
             let password = 'testtest';
             await createAcount(mailaddress, password);
             await login(mailaddress, password);
-            expect(() => {wrapper.vm.onClickLogout()}).not.toThrow();
-        })
+            await wrapper.vm.onClickLogout();
 
-        test('ログアウト => メッセージ', async () => {
-            let mailaddress = 'logout2@gmail.com';
-            let password = 'testtest2';
-            await createAcount(mailaddress, password);
-            await login(mailaddress, password);
-            const message = await wrapper.vm.logout();
-            expect(message).toBe('成功');
-        })
+            // alertが呼ばれない
+            expect(window.alert.mock.calls.length).toBe(0);
+
+            
+            // 成功時はuser取得不可
+            const user = getUser();
+            expect(user).toBeFalsy();
+        });
+
+        // 未ログイン時のログアウトはエラーにならない
+        // test('未ログイン => ログアウト失敗', async () => {
+        //     let mailaddress = 'logout2@gmail.com';
+        //     let password = 'testtest';
+        //     await createAcount(mailaddress, password);
+        //     await wrapper.vm.onClickLogout();
+            
+        //     // alertが１度呼ばれる
+        //     expect(window.alert.mock.calls.length).toBe(1);
+        // });
+
     })
 
 });

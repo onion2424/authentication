@@ -1,11 +1,10 @@
-//https://zenn.dev/mikakane/books/nuxtjs-chatapp/viewer/3
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import 'firebase/auth'
-import 'firebase/firestore'
 import { getAuth, connectAuthEmulator , createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
+// firebase/authをテスト用に変換
+// https://zenn.dev/mikakane/books/nuxtjs-chatapp/viewer/3
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -40,4 +39,8 @@ export function login(mailaddress, password){
 // ログアウト
 export function logout(){
   return signOut(auth);
+}
+
+export function getUser(){
+  return auth.currentUser;
 }
