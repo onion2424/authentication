@@ -6,11 +6,9 @@ firebaseのauthenticationを用いた新規登録、ログイン、ログアウ�
 
 Firebase/Authentication
 
-nuxt.js (Typescript)
+Nuxt.js (Typescript)
 
   ・nuxt/firebase
-  
-  ・
   
 jest
 
@@ -79,7 +77,7 @@ jest
 
 ○ jest
   
-  
+  firebase/authenticationをエミュレータ上で操作することでテストを行う
   
   
 
