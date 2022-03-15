@@ -1,4 +1,4 @@
-import Signup from "~/pages/signup.vue";
+import Signup from "~/pages/signUp.vue";
 import { shallowMount } from '@vue/test-utils';
 import { createAcount, login, getUser } from '@/test/firebase';
 
@@ -58,6 +58,7 @@ describe('Signup', () => {
     
     // 登録関連
     describe('signup', () => {
+
         test('登録成功', async () => {
             let mailaddress = 'signup@gmail.com';
             let password = 'testtest';
@@ -77,7 +78,6 @@ describe('Signup', () => {
             expect(user.email).toBe(mailaddress);
         });
 
-        
         test('登録失敗', async () => {
             let mailaddress = 'signup2@gmail.com';
             let password = 'testtest';
@@ -94,6 +94,7 @@ describe('Signup', () => {
             expect(window.alert.mock.calls.length).toBe(1);
 
         });
+
 
     })
 

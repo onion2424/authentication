@@ -1,9 +1,6 @@
 import index from "~/pages/index.vue";
-import Login from "~/pages/login.vue";
-
 import { shallowMount } from '@vue/test-utils';
-import { createAcount, login } from '@/test/firebase';
-import { authStore } from "~/store";
+
 
 let wrapper;
 
@@ -11,7 +8,6 @@ let wrapper;
 //global.window = {location: {pathname: null}};
 
 const router = {push: jest.fn()};
-let myMock = jest.fn();
 
 beforeEach(() => {
   wrapper = shallowMount(index, {
@@ -54,13 +50,13 @@ describe('index', () => {
           isLoggedIn: () => true
         }
       });
-      const elm = loggedTest.find('p#loggedIn');
+      const elm = loggedTest.find('#LoggedIn');
       expect(elm.isVisible()).toBe(true);
 
     })
 
     test('未ログイン時はLoggedInなし', async () => {
-      const elm = wrapper.find('p#loggedIn');
+      const elm = wrapper.find('#LoggedIn');
       expect(elm.isVisible()).toBe(false);
 
     })
